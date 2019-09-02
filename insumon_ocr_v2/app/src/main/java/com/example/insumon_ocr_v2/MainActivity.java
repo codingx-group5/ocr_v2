@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacv.AndroidFrameConverter;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public opencv_core.Mat roi;
     //public Mat roi;
     public ImageView imageView;
+    public TextView result;
 
 
     Bitmap bitmap;
@@ -61,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
         Tess = new TesseractDetect(assetManager,file);
 
 
+
         imageView = (ImageView) findViewById(R.id.imgV);
+        result = (TextView) findViewById(R.id.result);
+
         Bitmap bit = conver.imagev2Bitmap(imageView);
 
         roi = conver.imagev2Mat(imageView);
@@ -76,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
         //bitmap = poss.getBitmap();
 
         imageView.setImageBitmap(poss.getBitmap());
+
+        String output = Tess.detectFromBitmap(poss.getBitmap());
+        result.setText(output);
+
 
 //        checkFile(new File(datapath + "tessdata/"), "letsgodigital");
 
