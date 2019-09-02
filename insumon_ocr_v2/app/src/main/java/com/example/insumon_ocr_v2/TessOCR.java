@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.googlecode.tesseract.android.TessBaseAPI.*;
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 public class TessOCR {
 

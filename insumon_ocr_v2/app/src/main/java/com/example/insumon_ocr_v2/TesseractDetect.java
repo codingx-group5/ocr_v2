@@ -1,32 +1,87 @@
 package com.example.insumon_ocr_v2;
 
-import org.bytedeco.leptonica.PIX;
-import org.bytedeco.tesseract.TessBaseAPI;
+//import org.bytedeco.leptonica.PIX;
+//import org.bytedeco.tesseract.TessBaseAPI;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+
+import com.googlecode.tesseract.android.TessBaseAPI;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class TesseractDetect {
-//
-//
-//    //////////////////////////////////////////
-//
-//    // must contain "tesseract" folder
-//    static final String TESSBASE_PATH = "/storage/emulated/0/Download/tesseract/";
-//    static final String DEFAULT_LANGUAGE = "eng";
-//    static final String CHINESE_LANGUAGE = "chi_sim";
-//
-//    //////////////////////////////////////////
-//
-//    private TessBaseAPI detector;
-//
-//    public TesseractDetect(){
-//        detector = new TessBaseAPI();
-//        detector.Init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-//        detector.SetPageSegMode(7);
-//    }
-//
-//    public void detectPixImg(PIX pixImg){
-//        detector.SetImage(pixImg);
-//        //detector.
-//    }
+
+    private String datapath = "";
+
+    private AssetManager asset;
+
+    private TessBaseAPI mTess;
+
+    public TesseractDetect(AssetManager assetPath){
+        String language = "eng";
+        asset = assetPath;
+        mTess = new TessBaseAPI();
+        checkFile(new File(datapath + "tessdata/"));
+        mTess.init(datapath, language);
+    }
+
+    public String detectFromBitmap(Bitmap bitImg){
+        String OCRresult = null;
+        mTess.setImage(bitImg);
+        OCRresult = mTess.getUTF8Text();
+        return OCRresult;
+    }
+
+
+    private void checkFile(File dir) {
+        if (!dir.exists()&& dir.mkdirs()){
+            this.copyFiles();
+        }
+        if(dir.exists()) {
+//            String datafilepath = datapath+ "/tessdata/eng.traineddata";
+            String datafilepath = datapath+ "/tessdata/tam.traineddata";
+            File datafile = new File(datafilepath);
+
+            if (!datafile.exists()) {
+                copyFiles();
+            }
+        }
+    }
+
+    private void copyFiles() {
+        try {
+            String filepath = datapath + "/tessdata/tam.traineddata";
+
+
+            InputStream instream = asset.open("tessdata/letsgodigital.traineddata");
+            OutputStream outstream = new FileOutputStream(filepath);
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = instream.read(buffer)) != -1) {
+                outstream.write(buffer, 0, read);
+            }
+
+
+            outstream.flush();
+            outstream.close();
+            instream.close();
+
+            File file = new File(filepath);
+            if (!file.exists()) {
+                throw new FileNotFoundException();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

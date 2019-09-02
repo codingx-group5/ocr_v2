@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacv.AndroidFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
-import org.bytedeco.tesseract.TessBaseAPI;
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,18 +40,23 @@ public class MainActivity extends AppCompatActivity {
 
     public Process poss;
     public ImgConvertor conver = new ImgConvertor();
+    public TesseractDetect Tess;
+
+    private AssetManager assetManager;
 
 
 //    public String datapath = getFilesDir()+ "/tesseract/";
 
 
 
-    private TessBaseAPI detector;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        assetManager = getAssets();
+
+        Tess = new TesseractDetect(assetManager);
 
 
         imageView = (ImageView) findViewById(R.id.imgV);
