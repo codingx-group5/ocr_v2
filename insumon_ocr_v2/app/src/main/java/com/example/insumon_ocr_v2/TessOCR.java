@@ -6,7 +6,6 @@ import android.os.Environment;
 import android.util.Log;
 
 import org.bytedeco.javacpp.RealSense;
-import org.bytedeco.tesseract.TessBaseAPI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import com.googlecode.tesseract.android.TessBaseAPI.*;
 
 public class TessOCR {
 
