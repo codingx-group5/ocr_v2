@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public TesseractDetect Tess;
 
     private AssetManager assetManager;
+    private File file;
 
 
 //    public String datapath = getFilesDir()+ "/tesseract/";
@@ -55,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         assetManager = getAssets();
+        file = getFilesDir();
 
-        Tess = new TesseractDetect(assetManager);
+        Tess = new TesseractDetect(assetManager,file);
 
 
         imageView = (ImageView) findViewById(R.id.imgV);

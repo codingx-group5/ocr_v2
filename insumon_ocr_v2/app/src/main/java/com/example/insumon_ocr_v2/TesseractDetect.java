@@ -22,11 +22,17 @@ public class TesseractDetect {
 
     private TessBaseAPI mTess;
 
-    public TesseractDetect(AssetManager assetPath){
-        String language = "eng";
+//    private File fileDir;
+
+    public TesseractDetect(AssetManager assetPath, File fil){
+        String language = "letsgodigital";
+
         asset = assetPath;
+//        fileDir = fil;
+
+        datapath = fil + "/tesseract/";
         mTess = new TessBaseAPI();
-        checkFile(new File(datapath + "tessdata/"));
+        checkFile(new File(datapath + "/tessdata/"));
         mTess.init(datapath, language);
     }
 
@@ -44,7 +50,7 @@ public class TesseractDetect {
         }
         if(dir.exists()) {
 //            String datafilepath = datapath+ "/tessdata/eng.traineddata";
-            String datafilepath = datapath+ "/tessdata/tam.traineddata";
+            String datafilepath = datapath+ "/tessdata/letsgodigital.traineddata";
             File datafile = new File(datafilepath);
 
             if (!datafile.exists()) {
@@ -55,7 +61,7 @@ public class TesseractDetect {
 
     private void copyFiles() {
         try {
-            String filepath = datapath + "/tessdata/tam.traineddata";
+            String filepath = datapath + "/tessdata/letsgodigital.traineddata";
 
 
             InputStream instream = asset.open("tessdata/letsgodigital.traineddata");
